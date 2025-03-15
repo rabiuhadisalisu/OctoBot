@@ -1,4 +1,4 @@
-FROM python:3.14.0a5-bookworm AS base
+FROM python:3.10-slim-buster AS base
 
 WORKDIR /
 
@@ -14,10 +14,9 @@ ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
 ENV PATH="/opt/venv/bin:$PATH"
 
 COPY . .
-RUN pip install --upgrade pip \
-    && pip install -U setuptools wheel pip>=20.0.0 \
+RUN pip install -U setuptools wheel pip>=20.0.0 \
     && pip install --no-cache-dir --prefer-binary -r requirements.txt \
-    && python3 setup.py install
+    && python setup.py install
 
 # build amazon-efs-utils
 # use v1.36.0 to avoid rust compiler requirement
